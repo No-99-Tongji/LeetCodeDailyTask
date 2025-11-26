@@ -1,0 +1,58 @@
+# 编译生成的可执行文件
+build/
+*.exe
+*.out
+*.app
+
+# 编译生成的对象文件
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+
+# 调试信息
+*.dSYM/
+*.pdb
+
+# 静态库
+*.a
+*.lib
+
+# CMake 生成的文件
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# IDE 和编辑器生成的文件
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux 系统文件
+*~
+
+# 临时文件
+*.tmp
+*.temp
+
+# 日志文件
+*.log
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
