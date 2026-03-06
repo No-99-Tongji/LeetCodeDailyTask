@@ -5,6 +5,7 @@ using namespace std;
 class Solution {
 public:
     int m, n;
+    const int mod = 1e9+7;
     vector<vector<vector<int>>> dp;
     int numberOfPaths(vector<vector<int>>& grid, int k) {
         m = grid.size();
@@ -31,7 +32,7 @@ public:
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 for (int l = 0; l < k; l++) {
-                    dp[i][j][(l + grid[i][j]) % k] += dp[i-1][j][l] + dp[i][j-1][l];
+                    dp[i][j][(l + grid[i][j]) % k] = (dp[i][j][(l + grid[i][j]) % k] + dp[i-1][j][l] + dp[i][j-1][l]) % mod;
                 }
             }
         }
