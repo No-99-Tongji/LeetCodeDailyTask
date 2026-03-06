@@ -14,7 +14,7 @@ public:
                 l = mid + 1;
             }
         }
-        return l;
+        return r;
     }
 
     int leftEdge(vector<int>& nums, int target) {
