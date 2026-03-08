@@ -1,38 +1,49 @@
-#include <iostream>
-#include <string>
-using namespace std;
-
 class Solution {
 public:
-    string s;
-    int it;
-    int parseNum() {
-        int ret = 1;
-        for (const char c : s.substr(it)) {
-            if (isdigit(c)) {
-                ret = ret * 10 + c - '0';
-            } else break;
+    string src; 
+    size_t ptr;
+
+    int getDigits() {
+        int ret = 0;
+        while (ptr < src.size() && isdigit(src[ptr])) {
+            ret = ret * 10 + src[ptr++] - '0';
         }
         return ret;
     }
 
-    string parseString() {
-        if (it == s.size() || s[it] == ']') {
+    string getString() {
+        if (ptr == src.size() || src[ptr] == ']') {
+            // String -> EPS
             return "";
         }
 
-        char cur = s[it];
-        int repTime = 1;
+        char cur = src[ptr]; int repTime = 1;
         string ret;
 
         if (isdigit(cur)) {
-            repTime += parseNum();
-            it++;
-            
+            // String -> Digits [ String ] String
+            // 解析 Digits
+            repTime = getDigits(); 
+            // 过滤左括号
+            ++ptr;
+            // 解析 String
+            string str = getString(); 
+            // 过滤右括号
+            ++ptr;
+            // 构造字符串
+            while (repTime--) ret += str; 
+        } else if (isalpha(cur)) {
+            // String -> Char String
+            // 解析 Char
+            ret = string(1, src[ptr++]);
         }
+        
+        return ret + getString();
     }
 
     string decodeString(string s) {
-        
+        src = s;
+        ptr = 0;
+        return getString();
     }
 };
