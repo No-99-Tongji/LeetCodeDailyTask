@@ -5,37 +5,26 @@ using namespace std;
 
 class Solution {
 public:
-    unordered_map<int, vector<string>> hash_slots;
-
-    int hash(const string& s) {
-        return s.length();
-    }
-
+    unordered_map<string, bool> mp;
+    vector<vector<bool>> dp;
     bool wordBreak(string s, vector<string>& wordDict) {
-        for (const string& w : wordDict) {
-            hash_slots[hash(w)].push_back(w);
-        }
-
-        while (s.length()) {
-            bool flag1 = false;
-            for (int i = 1; i <= 20; i++) {
-                bool flag2 = false;
-                if (hash_slots.find(i) == hash_slots.end()) continue;
-                for (const string& w : hash_slots[i]) {
-                    if (s.substr(0, i) == w) {
-                        s = s.substr(i);
-                        flag2 = true;
-                        break;
-                    }
-                }
-                if (flag2) {
-                    flag1 = true;
-                    break;
+        dp.resize(s.size());
+        for (auto& line : dp) line.resize(s.size());
+        for (const string& w : wordDict) mp[w] = true;
+        for (int i = 0; i < s.size(); i++) {
+            for (int j = i; j < s.size(); j++) {
+                if (mp[s.substr(i, j - i + 1)]) dp[i][j] = true;
+            }
+        } 
+        for (int i = 0; i < s.size(); i++) {
+            for (int j = i; j < s.size(); j++) {
+                if (dp[i][j]) continue;
+                for (int k = i; k < j; k++) {
+                    if (dp[i][k] && dp[k+1][j] || k == j) dp[i][j] = true;
                 }
             }
-            if (!flag1) return false;
         }
-        return true;
+        return dp[0][s.size() - 1];
     }
 };
 
